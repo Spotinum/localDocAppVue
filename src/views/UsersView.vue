@@ -38,92 +38,96 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, computed } from 'vue';
-  import { useApplicationStore } from '@/stores/application.js';
+import { ref, onMounted, computed } from 'vue';
+import { useApplicationStore } from '@/stores/application.js';
 
-  const { loadUserData } = useApplicationStore();
-  const userData = loadUserData();
-  const users = ref([]);
-  const itemsPerPage = 5;
-  const currentPage = ref(1);
-  const showModal = ref(false);
-  const modalMessage = ref('');
+const { loadUserData } = useApplicationStore();
+const userData = loadUserData();
+const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
 
-  onMounted(() => {
-    fetch(`http://localhost:9090/api/admin/users`, { //Send a GET request to get a list of all the users
+const users = ref([]);
+const itemsPerPage = 5;
+const currentPage = ref(1);
+const showModal = ref(false);
+const modalMessage = ref('');
+
+onMounted(() => {
+  fetch(`${backendURL}/api/admin/users`, { // Use backendURL variable here
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${userData.accessToken}`,
     },
   })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch users');
-        }
-        return response.json();
-      })
-      .then(data => {
-        users.value = data;
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error);
-      });
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+      return response.json();
+    })
+    .then(data => {
+      users.value = data;
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+    });
+});
   
-  const removeUser = (userId) => {
-    fetch(`http://localhost:9090/api/admin/users/${userId}/remove`, { //Send a POST request to remove the user from the system
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userData.accessToken}`,
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    openModal('Removed successfully!');
-                } else {
-                    throw new Error('Failed to remove');
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Error removing user:', error);
-            });
-  };
-  
-  const paginatedUsers = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return users.value.slice(start, end);
-  });
-  
-  const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
-  
-  const nextPage = () => {
-    if (currentPage.value < totalPages.value) {
-      currentPage.value++;
+const removeUser = (userId) => {
+  fetch(`${backendURL}/api/admin/users/${userId}/remove`, { // Use backendURL variable here
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userData.accessToken}`,
     }
-  };
+  })
+    .then(response => {
+      if (response.ok) {
+        openModal('Removed successfully!');
+      } else {
+        throw new Error('Failed to remove');
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error removing user:', error);
+    });
+};
   
-  const prevPage = () => {
-    if (currentPage.value > 1) {
-      currentPage.value--;
-    }
-  };
-  const openModal = (message) => {
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return users.value.slice(start, end);
+});
+  
+const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
+  
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+  
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const openModal = (message) => {
   modalMessage.value = message;
   showModal.value = true;
 };
 
 const closeModal = () => {
-        showModal.value = false;
-        setTimeout(() => {
-      location.reload();
-    }, 500);
-    };
+  showModal.value = false;
+  setTimeout(() => {
+    location.reload();
+  }, 500);
+};
 
-  </script>
+</script>
+
   
   <style>
   .pagination {

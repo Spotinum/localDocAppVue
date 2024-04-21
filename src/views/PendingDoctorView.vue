@@ -44,107 +44,109 @@
   </template>
   
   <script>
-  import { ref, onMounted } from 'vue';
-  import { useApplicationStore } from '@/stores/application.js';
-  import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useApplicationStore } from '@/stores/application.js';
+import { useRouter } from 'vue-router';
 
+export default {
+  props: ['doctorId'],
+  setup() {
+    const router = useRouter();
+    const { loadUserData } = useApplicationStore();
+    const userData = loadUserData();
+    const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
+    const doctorId = router.currentRoute.value.query.doctorId;
+    const pendingApprovalsClients = ref([]);
+    const showModal = ref(false);
+    const msg = ref('');
 
-  export default {
-    props: ['doctorId'],
-    setup() {
-const router = useRouter();
-  const { loadUserData } = useApplicationStore();
-const userData = loadUserData();
-const doctorId =  router.currentRoute.value.query.doctorId
-      const pendingApprovalsClients = ref([]);
-      const showModal = ref(false);
-      const msg = ref('');
-      const acceptClient = (clientId) => { //If the doctors clicks on Accept Client send a POST request to accept him
+    const acceptClient = (clientId) => {
+      fetch(`${backendURL}/api/pending/show/${doctorId}/${clientId}`, { // Use backendURL variable here
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.accessToken}`
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          response.text().then(result => {
+            msg.value = result;
+            openModal();
+          });
+        } else {
+          console.error('Failed to accept client:', response.statusText);
+        }
+      })
+      .catch(error => {
+        console.error('Error accepting client:', error);
+      });
+    };
 
-  fetch(`http://localhost:9090/api/pending/show/${doctorId}/${clientId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`
-    },
-  })
-  .then(response => {
-  if (response.ok) {
-    response.text().then(result => { //if response is ok display a message with the result 
-      msg.value = result;
-      openModal();
-    });
-  } else {
-    console.error('Failed to accept client:', response.statusText);
-  }
-})
-    .catch(error => {
-      console.error('Error accepting client:', error);
-    });
-};
-
-const declineClient = (clientId) => {
-
-  fetch(`http://localhost:9090/api/pending/show/${doctorId}/${clientId}/decline`, { //If the doctors clicks on Decline Client send a POST request to decline him
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`
-    },
-  })
-    .then(response => {
-      if (response.ok) {
-    response.text().then(result => {
-      msg.value = result;
-      openModal();
-    });
-  } else {
-        console.error('Failed to decline client:', response.statusText);
-      }
-    })
-    .catch(error => {
-      console.error('Error declining client:', error);
-    });
-};
+    const declineClient = (clientId) => {
+      fetch(`${backendURL}/api/pending/show/${doctorId}/${clientId}/decline`, { // Use backendURL variable here
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.accessToken}`
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          response.text().then(result => {
+            msg.value = result;
+            openModal();
+          });
+        } else {
+          console.error('Failed to decline client:', response.statusText);
+        }
+      })
+      .catch(error => {
+        console.error('Error declining client:', error);
+      });
+    };
 
     onMounted(() => {
-  fetch(`http://localhost:9090/api/pending/show/${doctorId}`, { //send a GET request to get a list of the clients that have sent a Request Approval to this doctor
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      pendingApprovalsClients.value = data || [];
-    })
-    .catch(error => {
-      console.error('Error fetching pending requests:', error);
+      fetch(`${backendURL}/api/pending/show/${doctorId}`, { // Use backendURL variable here
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.accessToken}`
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        pendingApprovalsClients.value = data || [];
+      })
+      .catch(error => {
+        console.error('Error fetching pending requests:', error);
+      });
     });
-});
-const openModal = () => {
-  showModal.value = true;
-};
 
-const closeModal = () => {
-        showModal.value = false;
-        setTimeout(() => {
-      location.reload();
-    }, 500);
+    const openModal = () => {
+      showModal.value = true;
     };
-      return {
-        pendingApprovalsClients,
+
+    const closeModal = () => {
+      showModal.value = false;
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    };
+
+    return {
+      pendingApprovalsClients,
       acceptClient,
       declineClient,
       openModal,
       closeModal,
       showModal,
       msg
-      };
-    },
-  };
-  </script>
+    };
+  },
+};
+</script>
+
   
   <style scoped>
   .table {

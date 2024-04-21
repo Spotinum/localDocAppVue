@@ -17,7 +17,6 @@ onBeforeMount(() => {
   <div id="app">
     <AppHeader  />
     <RouterView />
-    <AppFooter />
   </div>
 </template>
 

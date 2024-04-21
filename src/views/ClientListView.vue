@@ -74,98 +74,101 @@ import { useRouter } from 'vue-router';
 const { loadUserData } = useApplicationStore();
 const userData = loadUserData();
 const router = useRouter();
+const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
 
 const clients = ref([]);
 const itemsPerPage = 5;
 const currentPage = ref(1);
 const showModal = ref(false);
 const modalMessage = ref('');
+
 const openModal = (message) => {
-  modalMessage.value = message;
-  showModal.value = true;
+    modalMessage.value = message;
+    showModal.value = true;
 };
 
 const closeModal = () => {
-        showModal.value = false;
-        setTimeout(() => {
-      location.reload();
+    showModal.value = false;
+    setTimeout(() => {
+        location.reload();
     }, 500);
-    };
-onMounted(() => { //send get request to get the list of the clients
-  fetch('http://localhost:9090/api/client/list', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`, 
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      clients.value = data;
+};
+
+onMounted(() => {
+    fetch(`${backendURL}/api/client/list`, { // Use backendURL variable here
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.accessToken}`,
+        },
     })
-    .catch(error => console.error('Error fetching clients:', error));
+        .then(response => response.json())
+        .then(data => {
+            clients.value = data;
+        })
+        .catch(error => console.error('Error fetching clients:', error));
 });
 
-const paginatedClients = computed(() => { //shows only 5 clients per page 
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return clients.value.slice(start, end);
+const paginatedClients = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return clients.value.slice(start, end);
 });
 
 const totalPages = computed(() => Math.ceil(clients.value.length / itemsPerPage));
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-  }
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+    }
 };
 
 const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-  }
+    if (currentPage.value > 1) {
+        currentPage.value--;
+    }
 };
 
-const showNearDoctors = (postalCode, clientId, firstName, lastName) => {//If user clicks on Show Near Doctors send him to near-doctors and query the data 
-  router.push({
-    name: 'near-doctors',
-    query: {
-      firstName: firstName,
-      lastName: lastName,
-      postalCode: postalCode,
-      clientId: clientId
-    },
-  });
-};
-
-const showFamily = (clientId) => { //If user clicks on Show Family send him to family-list and query the data 
-  router.push({
-    name: "family-list", 
-    query: { clientId: clientId }
-  });
-};
-
-const removeCurrentDoctor = (clientId, doctorId) => { //Send a post request to remove the current doctor of the client
-  fetch(`http://localhost:9090/api/client/list/${clientId}/removeDoc/${doctorId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`, 
-    },
-  })
-  .then((response) => {
-      if (response.ok) { //if reponse is ok show message succesfull 
-        openModal('Removed Doctor successfully!');
-      } else { //reseponse is not ok show
-        openModal('Failed to remove Doctor.');
-      }
-    })
-    .catch((error) => {
-      openModal(`Error: ${error}`);
+const showNearDoctors = (postalCode, clientId, firstName, lastName) => {
+    router.push({
+        name: 'near-doctors',
+        query: {
+            firstName: firstName,
+            lastName: lastName,
+            postalCode: postalCode,
+            clientId: clientId
+        },
     });
+};
 
-}
+const showFamily = (clientId) => {
+    router.push({
+        name: "family-list",
+        query: { clientId: clientId }
+    });
+};
+
+const removeCurrentDoctor = (clientId, doctorId) => {
+    fetch(`${backendURL}/api/client/list/${clientId}/removeDoc/${doctorId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.accessToken}`,
+        },
+    })
+        .then((response) => {
+            if (response.ok) {
+                openModal('Removed Doctor successfully!');
+            } else {
+                openModal('Failed to remove Doctor.');
+            }
+        })
+        .catch((error) => {
+            openModal(`Error: ${error}`);
+        });
+};
 </script>
+
 
 <style scoped>
 .pagination {

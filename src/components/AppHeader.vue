@@ -6,12 +6,6 @@
           <a href="/home" class="nav-link box">Home</a>
         </li>
         <li v-if="hasRole('CLIENT')">
-          <a href="/client/new" class="nav-link box">Add Client</a>
-        </li> 
-        <li v-if="hasRole('DOCTOR')">
-          <a href="/doctor/new" class="nav-link box">Add Doctor</a>
-        </li>
-        <li v-if="hasRole('CLIENT')">
           <a href="/client/list" class="nav-link box">Show Clients</a>
         </li>
         <li v-if="hasRole('DOCTOR')">

@@ -38,49 +38,50 @@
 import { useApplicationStore } from '@/stores/application.js';
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-const { loadUserData } = useApplicationStore();
-const userData = loadUserData();
 
 export default {
-  
   setup() {
+    const { loadUserData } = useApplicationStore();
+    const userData = loadUserData();
     const router = useRouter();
     const pendingApprovalsClients = ref([]);
     const itemsPerPage = 5;
     const currentPage = ref(1);
     const showOptionsModal = ref(false);
     const selectedDoctorName = ref('');
+    const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
 
-    const showOptions = (doctorId) => { //if user clicks on show options send him there and query the data
-  router.push({
-    path: `/pending/show/results`,
-    query: { doctorId: doctorId }
-  });
-};
+    const showOptions = (doctorId) => {
+      router.push({
+        path: `/pending/show/results`,
+        query: { doctorId: doctorId }
+      });
+    };
 
-onMounted(() => {
-  fetch(`http://localhost:9090/api/pending/show`, { //send a GET request to retrieve a list of Doctors with Pending Requests
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userData.accessToken}`
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data)
-      pendingApprovalsClients.value = data || [];
-    })
-    .catch(error => {
-      console.error('Error sending GET request:', error);
+    onMounted(() => {
+      fetch(`${backendURL}/api/pending/show`, { // Use backendURL variable here
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.accessToken}`
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        pendingApprovalsClients.value = data || [];
+      })
+      .catch(error => {
+        console.error('Error sending GET request:', error);
+      });
     });
-});
-    const paginatedClients = computed(() => { //Show only 5 doctors per page
+
+    const paginatedClients = computed(() => {
       const start = (currentPage.value - 1) * itemsPerPage;
       const end = start + itemsPerPage;
       return pendingApprovalsClients.value.slice(start, end);
@@ -114,6 +115,7 @@ onMounted(() => {
   },
 };
 </script>
+
 
 <style scoped>
 .table {

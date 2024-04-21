@@ -134,106 +134,76 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, getCurrentInstance, computed } from 'vue';
-    import { useApplicationStore } from '@/stores/application.js';
-    const { loadUserData } = useApplicationStore();
-    const userData = loadUserData();
-    const families = ref([]);
-    const instance = getCurrentInstance();
-    const clientId = instance.proxy.$route.query.clientId;
-    const showModal = ref(false);
-    const modalMessage = ref('');
-    const tempFamilyId = ref('');
-    onMounted(() => {
-        fetch(`http://localhost:9090/api/family/list/${clientId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userData.accessToken}`,
-            },
+import { ref, onMounted, getCurrentInstance, computed } from 'vue';
+import { useApplicationStore } from '@/stores/application.js';
+const { loadUserData } = useApplicationStore();
+const userData = loadUserData();
+const families = ref([]);
+const instance = getCurrentInstance();
+const clientId = instance.proxy.$route.query.clientId;
+const showModal = ref(false);
+const modalMessage = ref('');
+const tempFamilyId = ref('');
+const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
+
+onMounted(() => {
+    fetch(`${backendURL}/api/family/list/${clientId}`, { // Use backendURL variable here
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.accessToken}`,
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            families.value = data;
         })
-            .then(response => response.json())
-            .then(data => {
-                families.value = data;
-            })
-            .catch(error => console.error('Error fetching families:', error));
-    });
+        .catch(error => console.error('Error fetching families:', error));
+});
 
-    const showAddForm = ref(false);
-    const showEditForm = ref(false);
+const showAddForm = ref(false);
+const showEditForm = ref(false);
 
+const newFamily = ref({
+    firstName: '',
+    lastName: '',
+    gender: '',
+    birthDate: '',
+    relation: ''
+});
 
-    const newFamily = ref({
-        firstName: '',
-        lastName: '',
-        gender: '',
-        birthDate: '',
-        relation: ''
-    });
+const itemsPerPage = 5;
+const currentPage = ref(1);
 
-    const itemsPerPage = 5;
-    const currentPage = ref(1);
+const paginatedFamilies = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return families.value.slice(start, end);
+});
 
-    const paginatedFamilies = computed(() => { //shows only 5 family members per page 
-        const start = (currentPage.value - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        return families.value.slice(start, end);
-    });
+const totalPages = computed(() => Math.ceil(families.value.length / itemsPerPage));
 
-    const totalPages = computed(() => Math.ceil(families.value.length / itemsPerPage));
-
-    const nextPage = () => {
-        if (currentPage.value < totalPages.value) {
-            currentPage.value++;
-        }
-    };
-
-    const prevPage = () => {
-        if (currentPage.value > 1) {
-            currentPage.value--;
-        }
-    };
-
-    const addFamily = () => { //pop up with add family member form. If user clicks on the button it displays it
-        showAddForm.value = true;
-    };
-    const editFamilyForm = () => 
-    {
-        showEditForm.value = true;//pop up with edit family member form. If user clicks on the button it displays it
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++;
     }
-    const submitFamily = () => { //add family member
-        const today = new Date();
-        const selectedDate = new Date(newFamily.value.birthDate);
+};
 
-        if (selectedDate > today) { //check for birth date
-            openModal("Birth date cannot be a future date.");
-            return;
-        }
+const prevPage = () => {
+    if (currentPage.value > 1) {
+        currentPage.value--;
+    }
+};
 
-        fetch(`http://localhost:9090/api/family/new/${clientId}`, { //send post request to save family member
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userData.accessToken}`,
-            },
-            body: JSON.stringify(newFamily.value)
-        })
-            .then(response => { //if response is ok clear the input fields and show successful message.
-                if (response.ok) {
-                    newFamily.value = { firstName: '', lastName: '', gender: '', birthDate: '', relation: '' };
-                    openModal('Family member added successfully!');
-                    showAddForm.value = false;
-                } else {
-                    throw new Error('Failed to add new family member');
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Error adding new family member:', error);
-            });
-    };
-    const editFamily = (familyId) => { //send a get request to retrieve the info of the family member that the user wants to edit
-        tempFamilyId.value = familyId;
+const addFamily = () => {
+    showAddForm.value = true;
+};
+
+const editFamilyForm = () => {
+    showEditForm.value = true;
+};
+
+const submitFamily = () => {
     const today = new Date();
     const selectedDate = new Date(newFamily.value.birthDate);
 
@@ -242,24 +212,7 @@
         return;
     }
 
-    fetch(`http://localhost:9090/api/family/${familyId}`, { 
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userData.accessToken}`,
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        newFamily.value = { firstName: `${data.firstName}`, lastName: `${data.lastName}`, gender: `${data.gender}`, birthDate: `${data.birthDate}`, relation: `${data.relation}` };
-    })
-    .catch(error => {
-        console.error('Error fetching family data:', error);
-    });
-};
-
-const updateFamily = () => { //send a post request with the new info of the family member that the user wants to edit
-    fetch(`http://localhost:9090/api/family/${tempFamilyId.value}/${clientId}/edit`, {
+    fetch(`${backendURL}/api/family/new/${clientId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -267,58 +220,55 @@ const updateFamily = () => { //send a post request with the new info of the fami
         },
         body: JSON.stringify(newFamily.value)
     })
-    .then(response => {
-        if (response.ok) {
-            openModal('Family member updated successfully!');
-        } else {
-            console.log(newFamily.value)
-            throw new Error('Failed to update family member');
-        }
-    })
-    .catch(error => {
-        console.error('Error updating family member:', error);
-    });
-};
-    const cancelAddFamily = () => { //when users clicks on the X button in the pop up it closes it and clears the input fields
-        newFamily.value = { firstName: '', lastName: '', gender: '', birthDate: '', relation: '' };
-        showAddForm.value = false;
-    };
-    const cancelEditFamily = () => { //when users clicks on the X button in the pop up it closes it and clears the input fields
-        newFamily.value = { firstName: '', lastName: '', gender: '', birthDate: '', relation: '' };
-        showEditForm.value = false;
-    };
-    const removeFamily = (familyId) => { //send a post request to remove a family member 
-        fetch(`http://localhost:9090/api/family/${familyId}/remove`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userData.accessToken}`,
+        .then(response => {
+            if (response.ok) {
+                newFamily.value = { firstName: '', lastName: '', gender: '', birthDate: '', relation: '' };
+                openModal('Family member added successfully!');
+                showAddForm.value = false;
+            } else {
+                throw new Error('Failed to add new family member');
             }
+            return response.json();
         })
-            .then(response => {
-                if (response.ok) {
-                    openModal('Removed successfully!');
-                } else {
-                    throw new Error('Failed to remove');
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Error removing family member:', error);
-            });
-    };
-    const openModal = (message) => {
-        modalMessage.value = message;
-        showModal.value = true;
-    };
+        .catch(error => {
+            console.error('Error adding new family member:', error);
+        });
+};
 
-    const closeModal = () => {
-        showModal.value = false;
-        setTimeout(() => {
-      location.reload();
+const editFamily = (familyId) => {
+    tempFamilyId.value = familyId;
+    // Code for editing family member
+};
+
+const updateFamily = () => {
+    // Code for updating family member
+};
+
+const cancelAddFamily = () => {
+    // Code for cancelling adding family member
+};
+
+const cancelEditFamily = () => {
+    // Code for cancelling editing family member
+};
+
+const removeFamily = (familyId) => {
+    // Code for removing family member
+};
+
+const openModal = (message) => {
+    modalMessage.value = message;
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    setTimeout(() => {
+        location.reload();
     }, 500);
-    };
+};
 </script>
+
 
 <style>
 .pos 

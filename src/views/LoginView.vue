@@ -51,11 +51,13 @@ const credentials = ref({
 });
 const authenticationFailed = ref(false);
 
+const backendURL = import.meta.env.VITE_BACKEND;
+
 const onFormSubmit = () => {
     loading.value = true;
     authenticationFailed.value = false;
 
-    fetch('http://localhost:9090/api/auth/signin', { //Send a POST request for the user to log in
+    fetch(`${backendURL}/api/auth/signin`, { // Use backendURL variable here
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -63,16 +65,16 @@ const onFormSubmit = () => {
         body: JSON.stringify(credentials.value)
     })
         .then((response) => {
-            if (response.ok) { //if user exists send him to home page and save his data
+            if (response.ok) {
                 response.json().then((data) => {
                     setUserData(data);
                     persistUserData();
                     router.push({ name: 'home' });
                     setTimeout(() => {
-      location.reload();
-    }, 500);
+                        location.reload();
+                    }, 500);
                 });
-            } else { //otherwise he doesn't exist 
+            } else {
                 authenticationFailed.value = true;
             }
         })
@@ -85,13 +87,14 @@ const onFormSubmit = () => {
         });
 };
 
-onBeforeMount(() => { //if he goes to /login and he is already logged in send him to home page
-  if (isAuthenticated.value === true) {
-    router.replace({ name: 'home' });
-  }
+onBeforeMount(() => {
+    if (isAuthenticated.value === true) {
+        router.replace({ name: 'home' });
+    }
 });
 
 </script>
+
 
 
 <style scoped>

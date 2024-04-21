@@ -61,6 +61,8 @@ import { useApplicationStore } from '@/stores/application.js';
 
 const { loadUserData } = useApplicationStore();
 const userData = loadUserData();
+const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
+
 const instance = getCurrentInstance();
 const postalCode = instance.proxy.$route.query.postalCode;
 const clientId = instance.proxy.$route.query.clientId;
@@ -72,8 +74,8 @@ const currentPage = ref(1);
 const showModal = ref(false);
 const modalMessage = ref('');
 
-onMounted(() => { //Send a GET request to retrieve a list of the Near Doctors
-  fetch(`http://localhost:9090/api/client/list/doc/${postalCode}/${clientId}`, {
+onMounted(() => {
+  fetch(`${backendURL}/api/client/list/doc/${postalCode}/${clientId}`, { // Use backendURL variable here
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -83,15 +85,12 @@ onMounted(() => { //Send a GET request to retrieve a list of the Near Doctors
     .then(response => response.json())
     .then(data => { 
       let doc = [];
-      for (let i =0; i<data.length;i++)  
-      {
-        if (data[i].currentClients < data[i].maxClients) //check if the doctor has maximum amount of clients otherwise display him on the page
-        {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].currentClients < data[i].maxClients) {
           doc.push(data[i]);
         }
       }
       doctors.value = doc;
-
     })
     .catch(error => console.error('Error fetching doctors:', error));
 });
@@ -116,8 +115,8 @@ const prevPage = () => {
   }
 };
 
-const requestApproval = (clientId, doctorId) => { //send a POST request to requst approval from the doctor
-  fetch(`http://localhost:9090/api/pending/insert/${clientId}/${doctorId}`, {
+const requestApproval = (clientId, doctorId) => {
+  fetch(`${backendURL}/api/pending/insert/${clientId}/${doctorId}`, { // Use backendURL variable here
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -163,6 +162,7 @@ const closeModal = () => {
 };
 
 </script>
+
 
 <style scoped>
 .pagination {
