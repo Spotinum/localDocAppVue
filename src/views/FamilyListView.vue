@@ -147,7 +147,7 @@ const tempFamilyId = ref('');
 const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
 
 onMounted(() => {
-    fetch(`${backendURL}/api/family/list/${clientId}`, { // Use backendURL variable here
+    fetch(`/api/api/family/list/${clientId}`, { // Use backendURL variable here
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

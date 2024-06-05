@@ -95,7 +95,7 @@ const closeModal = () => {
 };
 
 onMounted(() => {
-    fetch(`${backendURL}/api/client/list`, { // Use backendURL variable here
+    fetch(`/api/api/client/list`, { // Use backendURL variable here
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

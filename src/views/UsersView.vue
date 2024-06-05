@@ -52,7 +52,7 @@ const showModal = ref(false);
 const modalMessage = ref('');
 
 onMounted(() => {
-  fetch(`${backendURL}/api/admin/users`, { // Use backendURL variable here
+  fetch(`/api/api/admin/users`, { 
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

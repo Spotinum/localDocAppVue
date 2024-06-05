@@ -57,7 +57,7 @@ const onFormSubmit = () => {
     loading.value = true;
     authenticationFailed.value = false;
 
-    fetch(`${backendURL}/api/auth/signin`, { // Use backendURL variable here
+    fetch(`/api/api/auth/signin`, { // Use backendURL variable here
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

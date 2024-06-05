@@ -59,7 +59,7 @@ export default {
     };
 
     onMounted(() => {
-      fetch(`${backendURL}/api/pending/show`, { // Use backendURL variable here
+      fetch(`/api/api/pending/show`, { // Use backendURL variable here
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

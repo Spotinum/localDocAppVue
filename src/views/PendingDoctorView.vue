@@ -61,7 +61,7 @@ export default {
     const msg = ref('');
 
     const acceptClient = (clientId) => {
-      fetch(`${backendURL}/api/pending/show/${doctorId}/${clientId}`, { // Use backendURL variable here
+      fetch(`/api/api/pending/show/${doctorId}/${clientId}`, { // Use backendURL variable here
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

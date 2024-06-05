@@ -114,7 +114,7 @@ const router = useRouter();
 const backendURL = import.meta.env.VITE_BACKEND; // Import VITE_BACKEND variable
 
 const onFormSubmit = () => {
-  const endpoint = `${backendURL}/api/auth/signup`; // Use backendURL variable here
+  const endpoint = `/api/api/auth/signup`; // Use backendURL variable here
   const userData = {
     username: user.value.username,
     email: user.value.email,
