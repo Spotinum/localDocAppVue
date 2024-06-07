@@ -154,7 +154,7 @@ const onFormSubmit = () => {
     .catch((error) => {
       console.error('Error during registration:', error);
       msg.value = 'An error occurred during registration. Please try again.';
-    }); 
+    });
 };
 
 const toggleDoctorFields = () => {
@@ -172,42 +172,42 @@ const toggleDoctorFields = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%; 
+  height: 100%;
   background-color: transparent;
 }
-  
+
 .modal-container {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
-  
+
 .modal-content {
   padding: 20px;
   border-radius: 8px;
-  background-color: #2d2c2c;
+  background-color: #f9f9f9; /* Light gray background */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-  
+
 .form-group {
   margin-bottom: 15px;
 }
-  
+
 .form-control {
   width: 100%;
-  padding: 3px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 14px;
   text-align: center;
 }
-  
+
 .btn {
   width: 100%;
   padding: 12px;
   font-size: 16px;
   border-radius: 8px;
-  background: linear-gradient(to right, #646665, #2e3030, #2a2828);
+  background: linear-gradient(to right, #4CAF50, #218838); /* Green gradient background */
   color: #ffffff;
   transition: background 0.3s ease;
   border: none;
@@ -216,10 +216,6 @@ const toggleDoctorFields = () => {
 }
 
 .btn:hover {
-  box-shadow: 0 0 10px rgba(80, 173, 240, 0.5);
-}
-  
-.white-text {
-  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 128, 0, 0.5); /* Green shadow on hover */
 }
 </style>

@@ -31,26 +31,27 @@ export default {
   },
 };
 </script>
-  
-  <style>
-  .zoomInUp {
-    animation: zoomInUp 1s ease forwards;
+
+<style>
+.zoomInUp {
+  animation: zoomInUp 1s ease forwards;
+}
+
+.dark-text {
+  text-align: center;
+  color: #333; /* Dark text color */
+}
+
+@keyframes zoomInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-150px);
   }
-  
-  .white-text {
-    text-align: center;
-    color: #fff; 
+  to {
+    opacity: 1;
+    transform: translateY(-200px);
   }
-  
-  @keyframes zoomInUp {
-    from {
-      opacity: 0;
-      transform: translateY(-150px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(-200px);
-    }
-  }
-  </style>
+}
+</style>
+
   

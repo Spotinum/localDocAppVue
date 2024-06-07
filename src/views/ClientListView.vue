@@ -179,8 +179,8 @@ const removeCurrentDoctor = (clientId, doctorId) => {
 }
 
 .pagination button {
-  background-color: #4f5054;
-  color: #fff;
+  background-color: #3498db; /* Blue */
+  color: #fff; /* White */
   padding: 8px 16px;
   cursor: pointer;
   border: none;
@@ -198,91 +198,91 @@ const removeCurrentDoctor = (clientId, doctorId) => {
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #333332;
+  background-color: #f0f0f0; /* Light gray */
   border: none;
-  border: 1px solid #000000;
+  border: 1px solid #ddd; /* Light gray border */
   margin-top: 10px;
 }
 
 th, td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #000000;
+  border: 1px solid #ddd; /* Light gray border */
 }
 
 th {
-  background-color: #4f5054;
-  color: #fff;
+  background-color: #3498db; /* Blue */
+  color: #fff; /* White */
 }
 .modal {
-        display: none;
-        position: fixed;
-        z-index: 1001;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .modal-content {
-        background-color: #333332;
-        color: #fff;
-        margin: 0 auto;
-        padding: 20px;
-        border-radius: 5px;
-        border: 1px solid #fff;
-        width: 60%;
-        max-width: 400px;
-        z-index: 1002;
-    }
+.modal-content {
+  background-color: #f0f0f0; /* Light gray */
+  color: #333; /* Dark gray */
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #333; /* Dark gray border */
+  width: 60%;
+  max-width: 400px;
+  z-index: 1002;
+}
 
-    .close {
-        color: #fff;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.close {
+  color: #333; /* Dark gray */
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .close:hover,
-    .close:focus {
-        color: #aaa;
-        text-decoration: none;
-    }
+.close:hover,
+.close:focus {
+  color: #aaa; /* Lighter gray on hover/focus */
+  text-decoration: none;
+}
 
-    .success {
-        color: #b9bdb9;
-    }
+.success {
+  color: #2ecc71; /* Green */
+}
 .btn {
   margin-right: 5px;
   padding: 10px 20px !important;
   border-radius: 5px;
   text-decoration: none;
-  color: #fff;
+  color: #fff; /* White */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  background-color: #4e565c !important;
+  background-color: #3498db; /* Blue */
   border: none;
   display: inline-block;
 }
 
 .btn:hover {
-  background-color: #2c3e50;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
 .stylish-btn {
   padding: 12px 24px !important;
   border-radius: 25px;
   text-decoration: none;
-  color: #fff;
+  color: #fff; /* White */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  background-color: #4e565c !important;
+  background-color: #3498db; /* Blue */
   border: none;
   display: inline-block;
   overflow: hidden;
@@ -290,7 +290,7 @@ th {
 }
 
 .stylish-btn:hover {
-  background-color: #2c3e50;
+  background-color: #2980b9; /* Darker blue on hover */
   transform: scale(1.05);
 }
 
@@ -301,7 +301,7 @@ th {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #11212b, #133145);
+  background: linear-gradient(45deg, #3498db, #2980b9); /* Gradient blue */
   z-index: -1;
   transition: transform 0.3s ease;
   transform: scaleX(0);
@@ -315,10 +315,11 @@ th {
 
 h3 {
   margin-top: 20px;
-  color: #2c3e50;
+  color: #333; /* Dark gray */
 }
 
 .white-text {
-  color: #fff;
+  color: #333; /* Dark gray */
 }
 </style>
+

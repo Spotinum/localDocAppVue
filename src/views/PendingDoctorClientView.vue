@@ -123,21 +123,21 @@ export default {
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #333332;
+  background-color: #ffffff; /* Light background color */
   border: none;
-  color: #fff;
-  border: 1px solid #000000;
+  color: #333; /* Dark text color */
+  border: 1px solid #ddd; /* Light border color */
 }
 
 th, td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* Light border color */
 }
 
 th {
-  background-color: #333;
-  color: #fff;
+  background-color: #f0f0f0; /* Light gray background color */
+  color: #333; /* Dark text color */
 }
 
 .btn {
@@ -147,27 +147,30 @@ th {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .pagination {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .stylish-btn {
   padding: 12px 24px !important;
   border-radius: 25px;
   text-decoration: none;
-  color: #fff;
+  color: #333; /* Dark text color */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  background-color: #4e565c !important;
+  background-color: #f0f0f0; /* Light background color */
   border: none;
   display: inline-block;
   overflow: hidden;
   position: relative;
 }
+
 .stylish-btn:hover {
-  background-color: #2c3e50;
+  background-color: #e0e0e0; /* Lighter background color on hover */
   transform: scale(1.05);
 }
 
@@ -178,7 +181,7 @@ th {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #11212b, #133145);
+  background: linear-gradient(45deg, #f0f0f0, #f8f8f8); /* Light gradient */
   z-index: -1;
   transition: transform 0.3s ease;
   transform: scaleX(0);
@@ -189,8 +192,10 @@ th {
   transform: scaleX(1);
   transform-origin: left;
 }
+
 h3 {
-  color: #333;
+  color: #333; /* Dark text color */
   font-size: 18px;
 }
 </style>
+

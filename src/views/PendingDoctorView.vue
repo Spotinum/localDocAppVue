@@ -147,108 +147,107 @@ export default {
 };
 </script>
 
-  
-  <style scoped>
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #333332;
-    border: none;
-    color: #fff;
-    border: 1px solid #000000;
-  }
-  
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .btn {
-    padding: 8px 16px;
-    border-radius: 5px;
-    margin: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-info {
-    background-color: #2bc456;
-    color: #fff;
-    border: none;
-  }
-  
-  .btn-danger {
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-  }
-  
-  .btn-info:hover {
-    background-color: #0c8139;
-  }
-  
-  .btn-danger:hover {
-    background-color: #bc2323;
-  }
-  
-  h3 {
-    color: #333;
-    font-size: 18px;
-  }
-  .modal {
-        display: none;
-        position: fixed;
-        z-index: 1001;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
-    .modal-content {
-        background-color: #333332;
-        color: #fff;
-        margin: 0 auto;
-        padding: 20px;
-        border-radius: 5px;
-        border: 1px solid #fff;
-        width: 60%;
-        max-width: 400px;
-        z-index: 1002;
-    }
+<style scoped>
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background color */
+  border: none;
+  color: #333; /* Dark text color */
+  border: 1px solid #ddd; /* Light border color */
+}
 
-    .close {
-        color: #fff;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd; /* Light border color */
+}
 
-    .close:hover,
-    .close:focus {
-        color: #aaa;
-        text-decoration: none;
-    }
+th {
+  background-color: #f0f0f0; /* Light gray background color */
+  color: #333; /* Dark text color */
+}
 
-    .success {
-        color: #b9bdb9;
-    }
+.btn {
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.btn-info {
+  background-color: #2bc456; /* Green background color */
+  color: #fff; /* White text color */
+  border: none;
+}
 
-  </style>
+.btn-danger {
+  background-color: #f44336; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: #0c8139; /* Darker green on hover */
+}
+
+.btn-danger:hover {
+  background-color: #bc2323; /* Darker red on hover */
+}
+
+h3 {
+  color: #333; /* Dark text color */
+  font-size: 18px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.4); /* White background color with transparency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #ffffff; /* White background color */
+  color: #333; /* Dark text color */
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #fff; /* White border color */
+  width: 60%;
+  max-width: 400px;
+  z-index: 1002;
+}
+
+.close {
+  color: #333; /* Dark text color */
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #aaa; /* Lighter text color on hover/focus */
+  text-decoration: none;
+}
+
+.success {
+  color: #b9bdb9; /* Light gray text color */
+}
+</style>
+
   

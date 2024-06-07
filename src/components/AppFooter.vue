@@ -8,10 +8,12 @@
 
 <style scoped>
 .footer {
-  background-color: transparent; 
-  color: #ffffff; 
+  background-color: #ffffff; /* Light background */
+  color: #333333; /* Dark text color */
   padding: 2px 0;
   position: fixed;
   bottom: 0;
+  width: 100%; /* Ensure the footer spans the full width */
+  border-top: 1px solid #ccc; /* Optional: add a border on top for separation */
 }
 </style>

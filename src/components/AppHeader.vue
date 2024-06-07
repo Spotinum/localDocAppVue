@@ -52,13 +52,14 @@ router.beforeEach((to, from, next) => {
 <style scoped>
 .header-box {
   position: sticky;
-  top: 0; 
-  z-index: 100; 
+  top: 0;
+  left: 0;
+  z-index: 100;
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
   padding: 1rem;
-  background-color: transparent; 
+  background-color: #f0f0f0;
   border-radius: 8px;
   transition: margin-top 0.5s ease;
 }
@@ -70,19 +71,20 @@ router.beforeEach((to, from, next) => {
 }
 
 .nav-link {
-  color: #fff; 
+  color: #ffffff; /* White text color */
   text-decoration: none;
   padding: 1rem;
   border-radius: 8px;
+  background-color: #3498db; /* Blue background */
   transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: #4c5155;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
 .box {
-  background-color: #202933; 
+  background-color: #3498db; /* Blue background for box */
 }
 
 .zoomInUp {

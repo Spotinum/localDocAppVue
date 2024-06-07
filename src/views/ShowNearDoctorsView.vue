@@ -173,8 +173,8 @@ const closeModal = () => {
 }
 
 button {
-  background-color: #4f5054;
-  color: #fff;
+  background-color: #ffffff; /* White background color */
+  color: #333333; /* Dark text color */
   cursor: pointer;
   padding: 8px;
   border-radius: 5px;
@@ -183,13 +183,14 @@ button {
 }
 
 button:hover {
-  background-color: #2c3e50; 
+  background-color: #e0e0e0; /* Lighter background color on hover */
 }
+
 .stylish-btn {
   padding: 12px 24px !important;
   border-radius: 25px;
   text-decoration: none;
-  color: #fff;
+  color: #ffffff; /* White text color */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   background-color: #4e565c !important;
@@ -198,6 +199,7 @@ button:hover {
   overflow: hidden;
   position: relative;
 }
+
 .stylish-btn:hover {
   background-color: #2c3e50;
   transform: scale(1.05);
@@ -210,7 +212,7 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #11212b, #133145);
+  background: linear-gradient(45deg, #ffffff, #f0f0f0); /* Gradient for button */
   z-index: -1;
   transition: transform 0.3s ease;
   transform: scaleX(0);
@@ -221,14 +223,15 @@ button:hover {
   transform: scaleX(1);
   transform-origin: left;
 }
+
 .table {
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #333332;
+  background-color: #ffffff; /* White background color */
   border: none;
-  color: #fff;
+  color: #333333; /* Dark text color */
   border: 1px solid #000000;
 }
 
@@ -239,60 +242,61 @@ th, td {
 }
 
 th {
-  background-color: #4f5054;
-  color: #fff;
+  background-color: #ffffff; /* White background color */
+  color: #333333; /* Dark text color */
 }
 
 .modal {
-        display: none;
-        position: fixed;
-        z-index: 1001;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.4); /* White background color with transparency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .modal-content {
-        background-color: #333332;
-        color: #fff;
-        margin: 0 auto;
-        padding: 20px;
-        border-radius: 5px;
-        border: 1px solid #fff;
-        width: 60%;
-        max-width: 400px;
-        z-index: 1002;
-    }
+.modal-content {
+  background-color: #ffffff; /* White background color */
+  color: #333333; /* Dark text color */
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #333333; /* Dark border color */
+  width: 60%;
+  max-width: 400px;
+  z-index: 1002;
+}
 
-    .close {
-        color: #fff;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.close {
+  color: #333333; /* Dark text color */
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .close:hover,
-    .close:focus {
-        color: #aaa;
-        text-decoration: none;
-    }
+.close:hover,
+.close:focus {
+  color: #aaaaaa; /* Lighter text color on hover/focus */
+  text-decoration: none;
+}
 
-    .success {
-        color: #b9bdb9;
-    }
+.success {
+  color: #333333; /* Dark text color */
+}
 
 .white-text {
-  color: #fff;
+  color: #ffffff; /* White text color */
 }
 
 h3 {
-  color: #fff;
+  color: #ffffff; /* White text color */
 }
 </style>
+

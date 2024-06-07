@@ -10,12 +10,11 @@ const { loadUserData } = useApplicationStore();
 onBeforeMount(() => {
   loadUserData();
 });
-
 </script>
 
 <template>
   <div id="app">
-    <AppHeader  />
+    <AppHeader />
     <RouterView />
   </div>
 </template>
@@ -42,20 +41,20 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #000000; 
+  background-color: #f0f0f0; /* Light background */
 }
 
 header {
-  background-color: #38444b; 
-  color: #ffffff;
+  background-color: #ffffff; /* Light background for header */
+  color: #333333; /* Dark text color for header */
   padding: 1rem;
   text-align: center;
   transition: background-color 0.5s ease;
 }
 
 nav {
-  background-color: #34495e; 
-  color: #ecf0f1;
+  background-color: #f7f7f7; /* Light background for nav */
+  color: #333333; /* Dark text color for nav */
   padding: 1rem;
   display: flex;
   justify-content: space-around;
@@ -65,13 +64,13 @@ nav {
 
 nav a {
   text-decoration: none;
-  color: #ecf0f1;
+  color: #333333; /* Dark text color for nav links */
   font-weight: bold;
   transition: color 0.3s;
 }
 
 nav a:hover {
-  color: #3498db;
+  color: #3498db; /* Blue color for hover effect */
 }
 
 main {
@@ -80,11 +79,10 @@ main {
 }
 
 footer {
-  background-color: #3498db;
-  color: #ffffff;
+  background-color: #f7f7f7; /* Light background for footer */
+  color: #333333; /* Dark text color for footer */
   padding: 1rem;
   text-align: center;
   transition: background-color 0.5s ease;
 }
 </style>
-  

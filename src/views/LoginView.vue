@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay white-text">
+  <div class="overlay dark-text">
     <div class="modal-container">
       <div class="modal-content">
         <div class="text-center mb-4">
@@ -32,9 +32,7 @@
       </div>
     </div>
   </div>
-
 </template>
-
 
 <script setup>
 import { onBeforeMount, ref } from 'vue';
@@ -46,56 +44,53 @@ const { setUserData, persistUserData, isAuthenticated } = useApplicationStore();
 
 const loading = ref(false);
 const credentials = ref({
-    username: '',
-    password: ''
+  username: '',
+  password: ''
 });
 const authenticationFailed = ref(false);
 
 const backendURL = import.meta.env.VITE_BACKEND;
 
 const onFormSubmit = () => {
-    loading.value = true;
-    authenticationFailed.value = false;
+  loading.value = true;
+  authenticationFailed.value = false;
 
-    fetch(`${backendURL}/api/auth/signin`, { // Use backendURL variable here
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials.value)
-    })
-        .then((response) => {
-            if (response.ok) {
-                response.json().then((data) => {
-                    setUserData(data);
-                    persistUserData();
-                    router.push({ name: 'home' });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 500);
-                });
-            } else {
-                authenticationFailed.value = true;
-            }
-        })
-        .catch((err) => {
-            console.warn(err);
-            authenticationFailed.value = true;
-        })
-        .finally(() => {
-            loading.value = false;
-        });
+  fetch(`${backendURL}/api/auth/signin`, { // Use backendURL variable here
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials.value)
+  })
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            setUserData(data);
+            persistUserData();
+            router.push({ name: 'home' });
+            setTimeout(() => {
+              location.reload();
+            }, 500);
+          });
+        } else {
+          authenticationFailed.value = true;
+        }
+      })
+      .catch((err) => {
+        console.warn(err);
+        authenticationFailed.value = true;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
 };
 
 onBeforeMount(() => {
-    if (isAuthenticated.value === true) {
-        router.replace({ name: 'home' });
-    }
+  if (isAuthenticated.value === true) {
+    router.replace({ name: 'home' });
+  }
 });
-
 </script>
-
-
 
 <style scoped>
 .overlay {
@@ -103,7 +98,7 @@ onBeforeMount(() => {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: transparent;
+  background-color: #f0f0f0;
 }
 
 .modal-container {
@@ -115,8 +110,8 @@ onBeforeMount(() => {
 .modal-content {
   padding: 20px;
   border-radius: 8px;
-  background-color: #2d2c2c;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .form-control {
@@ -133,8 +128,8 @@ onBeforeMount(() => {
   padding: 12px;
   font-size: 16px;
   border-radius: 8px;
-  background: linear-gradient(to right, #646665, #2e3030, #2a2828);
-  color: #ffffff;
+  background: linear-gradient(to right, #f0f0f0, #d9d9d9, #bfbfbf);
+  color: #000000;
   transition: background 0.3s ease;
   border: none;
   outline: none;
@@ -144,8 +139,8 @@ onBeforeMount(() => {
 .btn:hover {
   box-shadow: 0 0 10px rgba(80, 173, 240, 0.5);
 }
-.white-text 
-{
-  color: #fff;
+
+.dark-text {
+  color: #000;
 }
 </style>

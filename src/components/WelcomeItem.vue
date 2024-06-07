@@ -13,6 +13,13 @@
 </template>
 
 <style scoped>
+:root {
+  --color-text: #000; /* Black text */
+  --color-heading: #333; /* Darker grey for headings */
+  --color-border: #ccc; /* Light grey for borders */
+  --color-background: #fff; /* White background */
+}
+
 .item {
   margin-top: 2rem;
   display: flex;
