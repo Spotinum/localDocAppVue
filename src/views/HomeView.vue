@@ -3,8 +3,6 @@ HTML
   <div>
     <h1 class="zoomInUp white-text">FamilyDocApp</h1>
     <p class="zoomInUp white-text" ref="textElement">
-        Welcome to our platform! Experience hassle-free access to
-        healthcare services with our user-friendly platform.
     </p>
   </div>
 </template>
